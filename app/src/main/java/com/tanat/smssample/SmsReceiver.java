@@ -25,12 +25,12 @@ public class SmsReceiver extends BroadcastReceiver {
                 smsBody += smsMessage.getMessageBody();
             }
 
-            if (smsBody.startsWith(SmsHelper.SMS_CONDITION)) {
-                Log.d(TAG, "Sms with condition detected");
-                Toast.makeText(context, "BroadcastReceiver caught conditional SMS: " + smsBody, Toast.LENGTH_LONG).show();
-            }
+            Log.d(TAG, "Sender: " + smsSender);
+            Log.d(TAG, "Body: " + smsBody);
+            Toast.makeText(context, "BroadcastReceiver caught conditional SMS: " + smsBody, Toast.LENGTH_LONG).show();
 
-            mListener.messageReceived(smsSender, smsBody);
+            if (mListener != null)
+                mListener.messageReceived(smsSender, smsBody);
         }
 
     }

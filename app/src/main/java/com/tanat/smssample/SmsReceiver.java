@@ -8,6 +8,8 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import static com.tanat.smssample.SmsHelper.SMS_ERRORS;
+
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String TAG = "SmsReceiver";
@@ -25,9 +27,12 @@ public class SmsReceiver extends BroadcastReceiver {
                 smsBody += smsMessage.getMessageBody();
             }
 
-            Log.d(TAG, "Sender: " + smsSender);
-            Log.d(TAG, "Body: " + smsBody);
-            Toast.makeText(context, "BroadcastReceiver caught conditional SMS: " + smsBody, Toast.LENGTH_LONG).show();
+            for (String smsError : SMS_ERRORS)
+                if (smsBody.startsWith(smsError)) {
+                    Log.d(TAG, "Sender: " + smsSender);
+                    Log.d(TAG, "Body: " + smsBody);
+                    Toast.makeText(context, "BroadcastReceiver caught conditional SMS: " + smsBody, Toast.LENGTH_LONG).show();
+                }
 
             if (mListener != null)
                 mListener.messageReceived(smsSender, smsBody);

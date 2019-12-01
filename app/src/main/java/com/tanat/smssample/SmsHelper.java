@@ -9,6 +9,7 @@ import android.telephony.SmsManager;
 public class SmsHelper {
 
     public static final String SMS_CONDITION = "Some condition";
+    public static final String[] SMS_ERRORS = new String[]{"Ошибка N3", "Error N35", "GL N3", "Заказ N5", "HT N14", "MMT N15", "Успешно  N7"};
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
         return android.util.Patterns.PHONE.matcher(phoneNumber).matches();

@@ -32,10 +32,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     Log.d(TAG, "Sender: " + smsSender);
                     Log.d(TAG, "Body: " + smsBody);
                     Toast.makeText(context, "BroadcastReceiver caught conditional SMS: " + smsBody, Toast.LENGTH_LONG).show();
-                }
 
-            if (mListener != null)
-                mListener.messageReceived(smsSender, smsBody);
+                    if (mListener != null)
+                        mListener.messageReceived(smsSender, smsBody);
+                }
         }
 
     }

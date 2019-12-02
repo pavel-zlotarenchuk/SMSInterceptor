@@ -101,30 +101,26 @@ public class MainActivity extends AppCompatActivity {
         SmsReceiver.bindListener(new SmsListener() {
             @Override
             public void messageReceived(String messageSender, String messageText) {
-                if (messageText.contains("REST-TIME:")) {
-                    //Find index for "Kod: " and substring
-                    final String resultStr = messageText.replace("REST-TIME:", "");
+                //Find index for "Kod: " and substring
+                final String resultStr = messageText.replace("REST-TIME:", "");
 
-                    Map<String, String> params = new HashMap<>();
-                    params.put("id", resultStr);
+                Map<String, String> params = new HashMap<>();
+                params.put("id", resultStr);
 
-                    // Send code on server
-                    App.getApiService().postCode(params).enqueue(new Callback<CodeResponse>() {
-                        @Override
-                        public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                            textView.setText("Request sending: \n" + resultStr);
-                        }
+                // Send code on server
+                App.getApiService().postCode(params).enqueue(new Callback<CodeResponse>() {
+                    @Override
+                    public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+                        textView.setText("Request sending: \n" + resultStr);
+                    }
 
-                        @Override
-                        public void onFailure(Call<CodeResponse> call, Throwable t) {
-                            textView.setText("Failure: \n" + t.toString());
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<CodeResponse> call, Throwable t) {
+                        textView.setText("Failure: \n" + t.toString());
+                    }
+                });
 
-                    textView.setText(resultStr);
-                } else {
-                    textView.setText("Sender: " + messageSender + "\nText: " + messageText);
-                }
+                textView.setText(resultStr);
             }
         });
     }
